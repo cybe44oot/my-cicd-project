@@ -107,6 +107,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /path/to/my-cicd-project
+            cd ~/my-cicd-project
             docker-compose pull
             docker-compose up -d --build
