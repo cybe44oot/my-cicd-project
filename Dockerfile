@@ -1,6 +1,7 @@
 # Use a minimal nginx image to serve the app
-FROM nginx:alpine
+FROM alpine:3.23
 
+RUN apk update && apk upgrade
 # Remove default nginx page
 RUN rm -rf /usr/share/nginx/html/*
 
