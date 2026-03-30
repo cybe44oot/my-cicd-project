@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My CI/CD App</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #e94560;
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: 0 0 40px rgba(233, 69, 96, 0.2);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #e94560;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #a0a0b0;
+      margin-bottom: 32px;
+    }
+
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #e94560;
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .badge.blue  { background: #0096c7; }
+    .badge.green { background: #2ec4b6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🚀 CI/CD Pipeline</h1>
+    <p>This app is built, scanned, and deployed automatically using GitHub Actions.</p>
+    <div class="badges">
+      <span class="badge">Docker</span>
+      <span class="badge blue">SonarQube</span>
+      <span class="badge green">Trivy</span>
+      <span class="badge">GitHub Actions</span>
+    </div>
+  </div>
+</body>
+</html>
