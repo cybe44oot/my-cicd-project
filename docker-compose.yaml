@@ -1,10 +1,19 @@
 version: '3.8'
 
 services:
-  frontend:
-    build: .                  # uses the Dockerfile in current folder
-    container_name: my-app
+
+  backend:
+    build: ./backend
+    container_name: my-backend
     ports:
-      - "8080:80"             # access app at http://localhost:8080
+      - "3000:3000"
     restart: unless-stopped
 
+  frontend:
+    build: ./frontend
+    container_name: my-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

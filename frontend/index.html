@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My CI/CD App</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #e94560;
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 40px rgba(233,69,96,0.2);
+    }
+
+    h1 { font-size: 2.5rem; color: #e94560; margin-bottom: 16px; }
+    p  { color: #a0a0b0; margin-bottom: 32px; }
+
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .badge { background: #e94560; color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
+    .badge.blue  { background: #0096c7; }
+    .badge.green { background: #2ec4b6; }
+    .badge.purple { background: #7b2d8b; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .stat-box {
+      background: #0f0f1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .stat-box .number { font-size: 2rem; font-weight: bold; color: #e94560; }
+    .stat-box .label  { font-size: 0.85rem; color: #a0a0b0; margin-top: 4px; }
+
+    .status {
+      display: inline-block;
+      background: #2ec4b6;
+      color: #0f0f1a;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-top: 16px;
+    }
+
+    .error { color: #e94560; font-size: 0.9rem; margin-top: 16px; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🚀 CI/CD Pipeline</h1>
+    <p>Built, scanned, and deployed automatically using GitHub Actions.</p>
+
+    <div class="badges">
+      <span class="badge">Docker</span>
+      <span class="badge blue">SonarQube</span>
+      <span class="badge green">Trivy</span>
+      <span class="badge purple">Node.js</span>
+      <span class="badge">GitHub Actions</span>
+    </div>
+
+    <div id="status-box">
+      <p style="color:#a0a0b0">Connecting to backend...</p>
+    </div>
+  </div>
+
+  <div class="card" id="stats-card" style="display:none">
+    <h2 style="color:#e94560; margin-bottom:24px">📊 Pipeline Stats</h2>
+    <div class="stats" id="stats-grid"></div>
+  </div>
+
+  <script>
+    const BACKEND = 'http://64.23.180.185:3000'
+
+    // Fetch backend info
+    fetch(`${BACKEND}/api/info`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('status-box').innerHTML = `
+          <p style="color:#a0a0b0">${data.app} — v${data.version}</p>
+          <span class="status">✅ ${data.status}</span>
+        `
+      })
+      .catch(() => {
+        document.getElementById('status-box').innerHTML =
+          '<p class="error">❌ Could not connect to backend</p>'
+      })
+
+    // Fetch stats
+    fetch(`${BACKEND}/api/stats`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('stats-card').style.display = 'block'
+        document.getElementById('stats-grid').innerHTML = `
+          <div class="stat-box">
+            <div class="number">${data.builds}</div>
+            <div class="label">Total Builds</div>
+          </div>
+          <div class="stat-box">
+            <div class="number">${data.deployments}</div>
+            <div class="label">Deployments</div>
+          </div>
+          <div class="stat-box">
+            <div class="number">${data.vulnerabilities}</div>
+            <div class="label">Vulnerabilities</div>
+          </div>
+          <div class="stat-box">
+            <div class="number">${data.codeQuality}</div>
+            <div class="label">Code Quality</div>
+          </div>
+        `
+      })
+  </script>
+
+</body>
+</html>
